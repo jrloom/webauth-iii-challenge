@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = (req, res, next) => {
-  const token = req.headers.authorize;
+function authUser(req, res, next) {
+  const token = req.headers.authorization;
   const secret = process.env.JWT_SECRET;
 
   if (token) {
@@ -16,4 +16,20 @@ module.exports = (req, res, next) => {
   } else {
     res.status(400).json({ errors: "No credentials provided" });
   }
+}
+
+function getJwtToken(username) {
+  const payload = {
+    username
+  };
+  const secret = process.env.JWT_SECRET || "secret";
+  const options = {
+    expiresIn: "1d"
+  };
+  return jwt.sign(payload, secret, options);
+}
+
+module.exports = {
+  authUser,
+  getJwtToken
 };
