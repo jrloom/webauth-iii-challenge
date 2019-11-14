@@ -19,6 +19,7 @@ function authUser(req, res, next) {
 }
 
 function getJwtToken(username) {
+  // todo pull out into a helper file - this isn't middleware
   const payload = {
     username
   };
