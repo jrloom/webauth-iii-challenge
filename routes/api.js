@@ -16,10 +16,13 @@ router.get("/users", auth.authUser, (req, res) => {
 router.post("/register", (req, res) => {
   const user = req.body;
   const hash = bcrypt.hashSync(user.password, 14);
+  const token = auth.getJwtToken(user.username);
   user.password = hash;
 
   Users.add(user)
-    .then(newUser => res.status(201).json(newUser))
+    .then(newUser =>
+      res.status(201).json({ newUser, message: "success", token })
+    )
     .catch(error => res.status(500).json(error.message));
 });
 
