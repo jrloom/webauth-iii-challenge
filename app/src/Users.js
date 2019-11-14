@@ -3,7 +3,6 @@ import { axiosWithAuth } from "./Utils/AxiosWithAuth";
 
 const Users = () => {
   const [user, setUser] = useState([]);
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     axiosWithAuth()
